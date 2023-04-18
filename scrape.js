@@ -23,7 +23,13 @@ async function takeScreenshot(url, outputPath, options = {}) {
 
 async function main() {
   const url = process.argv[2];
-  const outputPath = process.argv[3] || path.join(__dirname + '/downloads', 'screenshot.png');
+  const downloadsFolderPath = path.join(__dirname, 'downloads');
+
+    if (!fs.existsSync(downloadsFolderPath)) {
+        fs.mkdirSync(downloadsFolderPath);
+    }
+
+   const outputPath = path.join(downloadsFolderPath, process.argv[3]) || path.join(downloadsFolderPath, 'screenshot.png');
 
   if (!url) {
     console.error('Usage: node scraper.js <URL> [outputPath]');
